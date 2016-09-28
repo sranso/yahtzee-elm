@@ -1,3 +1,14 @@
+var _user$project$Dice$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html$text(
+				_elm_lang$core$Basics$toString(model))
+			]));
+};
 var _user$project$Dice$initialModel = 1;
 var _user$project$Dice$init = {ctor: '_Tuple2', _0: _user$project$Dice$initialModel, _1: _elm_lang$core$Platform_Cmd$none};
 var _user$project$Dice$OnResult = function (a) {
@@ -19,28 +30,6 @@ var _user$project$Dice$update = F2(
 			return {ctor: '_Tuple2', _0: _p0._0, _1: _elm_lang$core$Platform_Cmd$none};
 		}
 	});
-var _user$project$Dice$Roll = {ctor: 'Roll'};
-var _user$project$Dice$view = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(_user$project$Dice$Roll)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('Roll')
-					])),
-				_elm_lang$html$Html$text(
-				_elm_lang$core$Basics$toString(model))
-			]));
-};
 var _user$project$Dice$main = {
 	main: _elm_lang$html$Html_App$program(
 		{
@@ -50,3 +39,4 @@ var _user$project$Dice$main = {
 			subscriptions: _elm_lang$core$Basics$always(_elm_lang$core$Platform_Sub$none)
 		})
 };
+var _user$project$Dice$Roll = {ctor: 'Roll'};

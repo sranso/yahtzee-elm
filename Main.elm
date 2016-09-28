@@ -3,11 +3,14 @@ module Main exposing (..)
 import Html exposing (..)
 import Html.Events exposing (onClick)
 import Html.App
+-- import List
 import Dice
 
 
 -- MODEL
 
+
+-- List.repeat 6 diceModel
 
 type alias BoardModel =
   { diceModel : Dice.Model
@@ -29,6 +32,7 @@ init =
 
 type Msg
   = DiceMsg Dice.Msg
+  | RollDice
 
 
 -- VIEW
@@ -38,6 +42,7 @@ view : BoardModel -> Html Msg
 view model =
   div []
     [ Html.App.map DiceMsg (Dice.view model.diceModel)
+    , button [ onClick RollDice ] [ text "Roll Dice" ]
     ]
 
 
@@ -51,6 +56,13 @@ update msg model =
       let
           ( updatedDiceModel, diceCmd ) =
             Dice.update subMsg model.diceModel
+      in
+          ( { model | diceModel = updatedDiceModel }
+          , Cmd.map DiceMsg diceCmd )
+    RollDice ->
+      let
+          ( updatedDiceModel, diceCmd ) =
+            Dice.update Dice.Roll model.diceModel
       in
           ( { model | diceModel = updatedDiceModel }
           , Cmd.map DiceMsg diceCmd )

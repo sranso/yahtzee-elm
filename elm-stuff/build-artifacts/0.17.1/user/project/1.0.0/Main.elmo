@@ -6,6 +6,7 @@ var _user$project$Main$init = {ctor: '_Tuple2', _0: _user$project$Main$initialMo
 var _user$project$Main$BoardModel = function (a) {
 	return {diceModel: a};
 };
+var _user$project$Main$RollDice = {ctor: 'RollDice'};
 var _user$project$Main$DiceMsg = function (a) {
 	return {ctor: 'DiceMsg', _0: a};
 };
@@ -19,22 +20,45 @@ var _user$project$Main$view = function (model) {
 				A2(
 				_elm_lang$html$Html_App$map,
 				_user$project$Main$DiceMsg,
-				_user$project$Dice$view(model.diceModel))
+				_user$project$Dice$view(model.diceModel)),
+				A2(
+				_elm_lang$html$Html$button,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Events$onClick(_user$project$Main$RollDice)
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Roll Dice')
+					]))
 			]));
 };
 var _user$project$Main$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
-		var _p1 = A2(_user$project$Dice$update, _p0._0, model.diceModel);
-		var updatedDiceModel = _p1._0;
-		var diceCmd = _p1._1;
-		return {
-			ctor: '_Tuple2',
-			_0: _elm_lang$core$Native_Utils.update(
-				model,
-				{diceModel: updatedDiceModel}),
-			_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$DiceMsg, diceCmd)
-		};
+		if (_p0.ctor === 'DiceMsg') {
+			var _p1 = A2(_user$project$Dice$update, _p0._0, model.diceModel);
+			var updatedDiceModel = _p1._0;
+			var diceCmd = _p1._1;
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					model,
+					{diceModel: updatedDiceModel}),
+				_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$DiceMsg, diceCmd)
+			};
+		} else {
+			var _p2 = A2(_user$project$Dice$update, _user$project$Dice$Roll, model.diceModel);
+			var updatedDiceModel = _p2._0;
+			var diceCmd = _p2._1;
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					model,
+					{diceModel: updatedDiceModel}),
+				_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$DiceMsg, diceCmd)
+			};
+		}
 	});
 var _user$project$Main$main = {
 	main: _elm_lang$html$Html_App$program(

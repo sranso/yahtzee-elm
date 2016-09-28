@@ -36,8 +36,7 @@ type Msg
 view : Model -> Html Msg
 view model =
   div []
-      [ button [ onClick Roll ] [ text "Roll" ]
-      , text (toString model)
+      [ text (toString model)
       ]
 
 
