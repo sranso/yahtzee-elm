@@ -12,9 +12,15 @@ import Random
 type alias Model =
   Int
 
+
+initialModel : Model
+initialModel =
+  1
+
+
 init : ( Model, Cmd Msg )
 init =
-  ( 1, Cmd.none )
+  ( initialModel, Cmd.none )
 
 -- MESSAGES
 

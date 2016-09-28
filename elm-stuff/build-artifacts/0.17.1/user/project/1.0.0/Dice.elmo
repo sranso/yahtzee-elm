@@ -1,4 +1,5 @@
-var _user$project$Dice$init = {ctor: '_Tuple2', _0: 1, _1: _elm_lang$core$Platform_Cmd$none};
+var _user$project$Dice$initialModel = 1;
+var _user$project$Dice$init = {ctor: '_Tuple2', _0: _user$project$Dice$initialModel, _1: _elm_lang$core$Platform_Cmd$none};
 var _user$project$Dice$OnResult = function (a) {
 	return {ctor: 'OnResult', _0: a};
 };
