@@ -51,6 +51,23 @@ type Msg
 -- VIEW
 
 
+renderDie : Die -> Html Msg
+renderDie die =
+  let
+    dieStyle =
+      style
+        [ ( "padding", "10px" )
+        , ( "display", "table-cell" )
+        , ( "vertical-align", "middle" )
+        , ( "border", "1px solid black" )
+        , ( "border-radius", "8px" )
+        , ( "height", "45px" )
+        , ( "width", "45px" )
+        ]
+  in
+    p [ dieStyle ] [ text (toString die) ]
+
+
 view : Board -> Html Msg
 view model =
   let
@@ -61,9 +78,11 @@ view model =
         , ( "margin", "0 auto" )
         , ( "text-align", "center" )
         ]
-    dieStyle =
+    diceStyle =
       style
-        [ ( "padding", "10px" )
+        [ ( "display", "table" )
+        , ( "margin", "20px auto" )
+        , ( "border-spacing", "20px" )
         ]
     buttonStyle =
       style
@@ -71,7 +90,7 @@ view model =
         ]
   in
     div [ divStyle ]
-      [ p [ dieStyle ] [ text (toString model.dice) ]
+      [ div [ diceStyle ] ( List.map (\die -> renderDie die) model.dice )
       , button [ buttonStyle, onClick Roll ] [ text "Roll die" ]
       ]
 
