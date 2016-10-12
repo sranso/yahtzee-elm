@@ -2,6 +2,7 @@ module Main exposing (..)
 
 import Html exposing (..)
 import Html.Events exposing (onClick)
+import Html.Attributes exposing (style)
 import Html.App
 import List
 import Random
@@ -10,22 +11,28 @@ import Random
 -- MODEL
 
 
-type alias Board =
-  { die : Die
-  }
-
-initialModel : Board
-initialModel =
-  { die = initialDie
-  }
-
-
 type alias Die =
   Int
 
 initialDie : Die
 initialDie =
     1
+
+
+-- Main model
+type alias Board =
+  { dice : List Die
+  }
+
+initialModel : Board
+initialModel =
+  { dice = [ initialDie
+           , initialDie
+           , initialDie
+           , initialDie
+           , initialDie
+           ]
+  }
 
 
 init : ( Board, Cmd Msg )
@@ -46,22 +53,44 @@ type Msg
 
 view : Board -> Html Msg
 view model =
-  div []
-    [ text (toString model.die)
-    , button [ onClick Roll ] [ text "Roll die" ]
-    ]
+  let
+    divStyle =
+      style
+        [ ( "font-size", "18px" )
+        , ( "width", "580px" )
+        , ( "margin", "0 auto" )
+        , ( "text-align", "center" )
+        ]
+    dieStyle =
+      style
+        [ ( "padding", "10px" )
+        ]
+    buttonStyle =
+      style
+        [ ( "padding", "10px" )
+        ]
+  in
+    div [ divStyle ]
+      [ p [ dieStyle ] [ text (toString model.dice) ]
+      , button [ buttonStyle, onClick Roll ] [ text "Roll die" ]
+      ]
 
 
 -- UPDATE
 
+intList : Random.Generator (List Int)
+intList =
+    Random.list 5 (Random.int 1 6)
 
 update : Msg -> Board -> ( Board, Cmd Msg )
 update msg model =
   case msg of
     Roll ->
-      ( model, Random.generate OnResult ( Random.int 1 6 ) )
+      -- ( model, Random.generate OnResult ( (Random.int 1 6) ) )
+      -- ( model, Random.generate OnResult ( Random.list 5 (Random.int 1 6) ) )
+      ( model, Random.generate OnResult intList )
     OnResult res ->
-      ( { model | die = res }, Cmd.none )
+      ( { model | dice = res }, Cmd.none )
 
 
 -- SUBSCRIPTIONS
