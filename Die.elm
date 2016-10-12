@@ -1,4 +1,4 @@
-module Dice exposing (..)
+module Die exposing (..)
 
 import Html exposing (..)
 import Html.Events exposing (onClick)
@@ -21,6 +21,7 @@ initialModel =
 init : ( Model, Cmd Msg )
 init =
   ( initialModel, Cmd.none )
+
 
 -- MESSAGES
 
@@ -51,15 +52,3 @@ update msg model =
     OnResult res ->
       ( res, Cmd.none )
 
-
--- MAIN
-
-
-main : Program Never
-main =
-  Html.App.program
-    { init = init
-    , view = view
-    , update = update
-    , subscriptions = (always Sub.none)
-    }

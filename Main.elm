@@ -4,21 +4,19 @@ import Html exposing (..)
 import Html.Events exposing (onClick)
 import Html.App
 -- import List
-import Dice
+import Die
 
 
 -- MODEL
 
 
--- List.repeat 6 diceModel
-
 type alias BoardModel =
-  { diceModel : Dice.Model
+  { dieModel : Die.Model
   }
 
 initialModel : BoardModel
 initialModel =
-  { diceModel = Dice.initialModel
+  { dieModel = Die.initialModel
   }
 
 
@@ -31,8 +29,8 @@ init =
 
 
 type Msg
-  = DiceMsg Dice.Msg
-  | RollDice
+  = DieMsg Die.Msg
+  | RollDie
 
 
 -- VIEW
@@ -41,8 +39,8 @@ type Msg
 view : BoardModel -> Html Msg
 view model =
   div []
-    [ Html.App.map DiceMsg (Dice.view model.diceModel)
-    , button [ onClick RollDice ] [ text "Roll Dice" ]
+    [ Html.App.map DieMsg (Die.view model.dieModel)
+    , button [ onClick RollDie ] [ text "Roll die" ]
     ]
 
 
@@ -52,20 +50,20 @@ view model =
 update : Msg -> BoardModel -> ( BoardModel, Cmd Msg )
 update msg model =
   case msg of
-    DiceMsg subMsg ->
+    DieMsg subMsg ->
       let
-          ( updatedDiceModel, diceCmd ) =
-            Dice.update subMsg model.diceModel
+          ( updatedDieModel, dieCmd ) =
+            Die.update subMsg model.dieModel
       in
-          ( { model | diceModel = updatedDiceModel }
-          , Cmd.map DiceMsg diceCmd )
-    RollDice ->
+          ( { model | dieModel = updatedDieModel }
+          , Cmd.map DieMsg dieCmd )
+    RollDie ->
       let
-          ( updatedDiceModel, diceCmd ) =
-            Dice.update Dice.Roll model.diceModel
+          ( updatedDieModel, dieCmd ) =
+            Die.update Die.Roll model.dieModel
       in
-          ( { model | diceModel = updatedDiceModel }
-          , Cmd.map DiceMsg diceCmd )
+          ( { model | dieModel = updatedDieModel }
+          , Cmd.map DieMsg dieCmd )
 
 -- SUBSCRIPTIONS
 
