@@ -45,7 +45,7 @@ init =
 
 type Msg
   = Roll
-  | OnResult Int
+  | OnResult (List Die)
 
 
 -- VIEW
@@ -86,8 +86,6 @@ update : Msg -> Board -> ( Board, Cmd Msg )
 update msg model =
   case msg of
     Roll ->
-      -- ( model, Random.generate OnResult ( (Random.int 1 6) ) )
-      -- ( model, Random.generate OnResult ( Random.list 5 (Random.int 1 6) ) )
       ( model, Random.generate OnResult intList )
     OnResult res ->
       ( { model | dice = res }, Cmd.none )
