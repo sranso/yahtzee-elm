@@ -4,7 +4,6 @@ import Html exposing (..)
 import Html.Events exposing (onClick)
 import Html.App
 import Random
-import Debug
 
 
 -- MODEL
@@ -48,9 +47,9 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
   case msg of
     Roll ->
-      ( model, (Debug.log "random-Roll" Random.generate OnResult ( Random.int 1 6 )) )
+      ( model, Random.generate OnResult ( Random.int 1 6 ) )
     OnResult res ->
-      ( res, (Debug.log "none-OnResult" Cmd.none) )
+      ( res, Cmd.none )
 
 
 -- MAIN

@@ -5,7 +5,6 @@ import Html.Events exposing (onClick)
 import Html.App
 -- import List
 import Dice
-import Debug
 
 
 -- MODEL
@@ -56,17 +55,17 @@ update msg model =
     DiceMsg subMsg ->
       let
           ( updatedDiceModel, diceCmd ) =
-            Dice.update (Debug.log "submsg-DiceMsg" subMsg) model.diceModel
+            Dice.update subMsg model.diceModel
       in
           ( { model | diceModel = updatedDiceModel }
-          , (Debug.log "none-DiceMsg" Cmd.none) )
+          , Cmd.map DiceMsg diceCmd )
     RollDice ->
       let
           ( updatedDiceModel, diceCmd ) =
             Dice.update Dice.Roll model.diceModel
       in
           ( { model | diceModel = updatedDiceModel }
-          , Cmd.map (Debug.log "dicemsg-RollDice" DiceMsg) (Debug.log "dicecmd-RollDice" diceCmd) )
+          , Cmd.map DiceMsg diceCmd )
 
 -- SUBSCRIPTIONS
 
