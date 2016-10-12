@@ -3,20 +3,30 @@ module Main exposing (..)
 import Html exposing (..)
 import Html.Events exposing (onClick)
 import Html.App
--- import List
 import Die
+import List
+import Debug
 
 
 -- MODEL
 
 
+type alias DieModel = Die.Model
+
+
 type alias BoardModel =
-  { dieModel : Die.Model
+  { dice : List DieModel
   }
+
 
 initialModel : BoardModel
 initialModel =
-  { dieModel = Die.initialModel
+  { dice = [ Die.initialModel
+      , Die.initialModel
+      , Die.initialModel
+      , Die.initialModel
+      , Die.initialModel
+      ]
   }
 
 
@@ -39,8 +49,8 @@ type Msg
 view : BoardModel -> Html Msg
 view model =
   div []
-    [ Html.App.map DieMsg (Die.view model.dieModel)
-    , button [ onClick RollDie ] [ text "Roll die" ]
+    [ Html.App.map DieMsg (Die.view model.dice)
+    , button [ onClick RollDie ] [ text "Roll Dice" ]
     ]
 
 
@@ -53,7 +63,7 @@ update msg model =
     DieMsg subMsg ->
       let
           ( updatedDieModel, dieCmd ) =
-            Die.update subMsg model.dieModel
+            Die.update subMsg model.dice
       in
           ( { model | dieModel = updatedDieModel }
           , Cmd.map DieMsg dieCmd )
