@@ -19,9 +19,23 @@ initialDie =
     1
 
 
+type alias DiceToBeRolled =
+  List Bool
+
+initialDiceToBeRolled : List Bool
+initialDiceToBeRolled =
+    [ True
+    , True
+    , True
+    , True
+    , True
+    ]
+
+
 -- Main model
 type alias Board =
   { dice : List Die
+  , diceToBeRolled : DiceToBeRolled
   }
 
 initialModel : Board
@@ -32,6 +46,7 @@ initialModel =
            , initialDie
            , initialDie
            ]
+    , diceToBeRolled = initialDiceToBeRolled
   }
 
 
@@ -46,13 +61,14 @@ init =
 type Msg
   = Roll
   | OnResult (List Die)
+  | SelectDie Die
 
 
 -- VIEW
 
 
-renderDie : Die -> Html Msg
-renderDie die =
+renderDie : Die -> Int -> Html Msg
+renderDie die i =
   let
     dieStyle =
       style
@@ -65,7 +81,7 @@ renderDie die =
         , ( "width", "45px" )
         ]
   in
-    p [ dieStyle ] [ text (toString die) ]
+    p [ dieStyle, onClick (SelectDie i) ] [ text (toString die) ]
 
 
 view : Board -> Html Msg
@@ -90,7 +106,7 @@ view model =
         ]
   in
     div [ divStyle ]
-      [ div [ diceStyle ] ( List.map (\die -> renderDie die) model.dice )
+      [ div [ diceStyle ] ( List.indexedMap (\i die -> renderDie die i) model.dice )
       , button [ buttonStyle, onClick Roll ] [ text "Roll die" ]
       ]
 
@@ -107,7 +123,18 @@ update msg model =
     Roll ->
       ( model, Random.generate OnResult intList )
     OnResult res ->
-      ( { model | dice = res }, Cmd.none )
+      ( { model | dice = res, diceToBeRolled = initialDiceToBeRolled }, Cmd.none )
+    SelectDie msg ->
+      let
+        diceIndex = ( Debug.log "die index" msg )
+        newToBeRolled = List.indexedMap (\i willRoll ->
+          if i == diceIndex then
+            not willRoll
+          else
+            willRoll
+        ) model.diceToBeRolled
+      in
+        ( { model | diceToBeRolled = ( Debug.log "new list" newToBeRolled ) }, Cmd.none )
 
 
 -- SUBSCRIPTIONS
